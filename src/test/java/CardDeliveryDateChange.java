@@ -8,8 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -32,13 +31,13 @@ public class CardDeliveryDateChange {
         $("[name='phone']").setValue(faker.phoneNumber().phoneNumber());
         $(".checkbox__box").click();
         $(".button").click();
-        $("[data-test-id='success-notification']").shouldBe(visible).shouldHave(exactText(""));
+        $("[data-test-id='success-notification']").shouldBe(visible).shouldHave(text("Успешно!"));
 
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
         $("[placeholder='Дата встречи']").setValue(LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
         $(".button").click();
         $("[data-test-id='replan-notification'] button").click();
-        $("[data-test-id='success-notification']").shouldBe(visible).shouldHave(exactText(""));
+        $("[data-test-id='success-notification']").shouldBe(visible).shouldHave(text("Успешно!"));
 
         sleep(5000);
     }
