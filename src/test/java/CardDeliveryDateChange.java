@@ -17,20 +17,22 @@ public class CardDeliveryDateChange {
     void changeDateForCardDelivery() {
         open("http://localhost:9999");
         var cardReceiverInfo = CardReceiverDataGenerator.CardReceiver.getCardReceiverInfo();
+        var originalDeliveryDate = LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        var replanDeliveryDate = LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
         $("[placeholder='Город']").setValue(cardReceiverInfo.getCity());
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
-        $("[placeholder='Дата встречи']").setValue(LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        $("[placeholder='Дата встречи']").setValue(originalDeliveryDate);
         $("[name='name']").setValue(cardReceiverInfo.getName());
         $("[name='phone']").setValue(cardReceiverInfo.getPhoneNumber());
         $(".checkbox__box").click();
         $(".button").click();
-        $("[data-test-id='success-notification']").shouldBe(visible).shouldHave(text("Успешно!"));
+        $("[data-test-id='success-notification']").shouldBe(visible).shouldHave(text("Успешно! Встреча успешно запланирована на " + originalDeliveryDate));
 
         $("[placeholder='Дата встречи']").doubleClick().sendKeys(Keys.DELETE);
-        $("[placeholder='Дата встречи']").setValue(LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        $("[placeholder='Дата встречи']").setValue(replanDeliveryDate);
         $(".button").click();
         $("[data-test-id='replan-notification'] button").click();
-        $("[data-test-id='success-notification']").shouldBe(visible).shouldHave(text("Успешно!"));
+        $("[data-test-id='success-notification']").shouldBe(visible).shouldHave(text("Успешно! Встреча успешно запланирована на " + replanDeliveryDate));
     }
 }
