@@ -1,15 +1,13 @@
-import com.github.javafaker.Faker;
-import org.junit.jupiter.api.BeforeEach;
+package ru.netology.web.CardDeliveryDateChangeTest;
+
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+import ru.netology.web.DataGenerator.CardReceiverDataGenerator;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class CardDeliveryDateChange {
